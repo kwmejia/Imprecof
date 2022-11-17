@@ -23,7 +23,7 @@ export const stylesG = StyleSheet.create({
   btn: {
     width: 300,
     height: 78,
-    backgroundColor: '#68538D',
+    backgroundColor: '#3730A3',
     padding: 25,
     borderRadius: 25,
     marginTop: 50,

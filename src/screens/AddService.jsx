@@ -32,7 +32,6 @@ export const AddService = () => {
     setInfoService(infoUser);
     navigation.navigate("HelpYouScreen");
 
-
   }
 
   return (
@@ -71,4 +70,3 @@ export const AddService = () => {
     </SafeAreaView>
   )
 }
-

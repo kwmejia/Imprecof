@@ -15,7 +15,7 @@ export const LoginScreen = () => {
 
   const navigation = useNavigation();
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
 
     if ([user, password].includes('')) {
       Alert.alert('Hay campos vacíos'); ('Credenciales incorrectas');
@@ -24,7 +24,7 @@ export const LoginScreen = () => {
 
     const collectionRef = collection(firebaseDB, 'imprecof');
     const qry = query(collectionRef, where('usuario', '==', user.trim()), where('password', '==', password.trim()));
-    const data = onSnapshot(qry, querySnapshot => {
+    await onSnapshot(qry, querySnapshot => {
       setUsers(
         querySnapshot.docs.map(doc => ({
           id: doc.id,
@@ -41,7 +41,7 @@ export const LoginScreen = () => {
     }
     setUser('');
     setPassword('');
-    navigation.navigate("OrdersScreen");
+    navigation.navigate("TopTab");
   }
 
   return (

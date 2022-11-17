@@ -6,6 +6,7 @@ import { InfoContext } from '../context/InfoContext';
 import { stylesG } from '../themes/globalTheme';
 import { Picker } from '@react-native-picker/picker';
 import { useNavigation } from '@react-navigation/native';
+import { Alert } from 'react-native';
 
 export const SelectPritingScreen = () => {
 
@@ -34,7 +35,7 @@ export const SelectPritingScreen = () => {
   const handleSubmit = async () => {
     const { area, equipo } = infoService;
     if ([area, equipo].includes('')) {
-      console.log('Todos los campos son obligatorios');
+      Alert.alert('Todos los campos son obligatorios');
       return
     }
 

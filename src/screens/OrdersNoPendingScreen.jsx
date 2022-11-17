@@ -1,0 +1,43 @@
+import React, { useEffect, useState } from 'react';
+import { View, Text, SafeAreaView } from 'react-native';
+import { collection, onSnapshot, orderBy, query, where } from 'firebase/firestore';
+import { ServiceComponent } from '../components/ServiceComponent';
+import { stylesG } from '../themes/globalTheme';
+import firebaseDB from '../config/fb';
+
+
+export const OrdersNoPendingScreen = () => {
+  const [services, setServices] = useState([]);
+
+  useEffect(() => {
+    getServices();
+  }, [])
+
+  const getServices = () => {
+    const collectionRef = collection(firebaseDB, 'services');
+    const qry = query(collectionRef, where('pending', '==', false), orderBy('createdAt', 'desc'));
+
+    const data = onSnapshot(qry, querySnapshot => {
+      setServices(
+        querySnapshot.docs.map(doc => ({
+          id: doc.id,
+          area: doc.data().area,
+          direccion: doc.data().direccion,
+          equipo: doc.data().equipo,
+          nombre: doc.data().nombre,
+          telefono: doc.data().telefono,
+          tipo: doc.data().tipo,
+          createdAt: doc.data().createdAt
+        }))
+      )
+    });
+  }
+
+
+  return (
+    <SafeAreaView style={stylesG.container}>
+      <Text>Servicios Asignados</Text>
+      {services.map(service => <ServiceComponent key={service.id} service={service} />)}
+    </SafeAreaView>
+  )
+}
