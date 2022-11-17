@@ -14,7 +14,7 @@ export const HomeScreen = () => {
           style={stylesG.btn}
           onPress={() => navigation.navigate('AddService')}
         >
-          <Text style={stylesG.textBtn}>Cliente</Text>
+          <Text style={stylesG.textBtn}>CLIENTE</Text>
         </TouchableOpacity>
 
         <TouchableOpacity

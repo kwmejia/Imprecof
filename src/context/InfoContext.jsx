@@ -1,4 +1,6 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";;
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 export const InfoContext = createContext();
 
@@ -15,8 +17,8 @@ export const InfoProvider = ({ children }) => {
     pending: true
   });
 
-
   const [serviceInfo, setServiceInfo] = useState({});
+
 
 
   return (

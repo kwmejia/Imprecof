@@ -14,6 +14,7 @@ export const SpecificationsOrder = () => {
   const navigation = useNavigation();
 
 
+
   const handleEditCall = () => {
     const docRef = doc(firebaseDB, 'services', id);
     updateDoc(docRef, {
@@ -32,8 +33,13 @@ export const SpecificationsOrder = () => {
     navigation.goBack();
 
   }
+
+
   return (
     <SafeAreaView style={stylesG.container}>
+
+
+
       <Text>Cliente:</Text>
       <View style={stylesG.input}>
         <Text>{nombre}</Text>

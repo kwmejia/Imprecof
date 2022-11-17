@@ -1,5 +1,5 @@
-import React, { useContext, useState } from 'react';
-import { Text, SafeAreaView, TextInput, TouchableOpacity } from 'react-native';
+import React, { useContext, useEffect, useState } from 'react';
+import { Text, SafeAreaView, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { stylesG } from '../themes/globalTheme';
 import { InfoContext } from '../context/InfoContext';
@@ -20,16 +20,18 @@ export const AddService = () => {
   const { setInfoService } = useContext(InfoContext);
 
 
-  const handleNext = async () => {
+
+  const handleNext = () => {
     const { nombre, telefono, direccion } = infoUser;
 
     if ([nombre, telefono, direccion].includes('')) {
-      console.log('Hay campos vacíos');
+      Alert.alert('Hay campos vacíos');
       return;
     }
 
     setInfoService(infoUser);
     navigation.navigate("HelpYouScreen");
+
 
   }
 
@@ -40,18 +42,21 @@ export const AddService = () => {
         style={stylesG.input}
         placeholder="Nombre de la empresa"
         onChangeText={text => setInfoUser({ ...infoUser, nombre: text })}
+        value={infoUser?.nombre}
       />
 
       <TextInput
         style={stylesG.input}
         placeholder="Teléfono de contacto"
         onChangeText={text => setInfoUser({ ...infoUser, telefono: text })}
+        value={infoUser?.telefono}
       />
 
       <TextInput
         style={stylesG.input}
         placeholder="Dirección"
         onChangeText={text => setInfoUser({ ...infoUser, direccion: text })}
+        value={infoUser?.direccion}
       />
 
 

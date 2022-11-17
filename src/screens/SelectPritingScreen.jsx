@@ -4,15 +4,32 @@ import { collection, addDoc } from 'firebase/firestore';
 import firebaseDB from '../config/fb';
 import { InfoContext } from '../context/InfoContext';
 import { stylesG } from '../themes/globalTheme';
+import { Picker } from '@react-native-picker/picker';
 import { useNavigation } from '@react-navigation/native';
 
 export const SelectPritingScreen = () => {
 
   const [loading, setLoading] = useState(false);
+  const [areaPicker, setAreaPicker] = useState('');
+  const [equipoPicker, setEquipoPicker] = useState('');
   const { infoService, setInfoService } = useContext(InfoContext);
   const navigation = useNavigation();
 
   console.log('desde', infoService);
+
+  const dataArea = [
+    { label: 'CONTADURIA', value: 'CONTADURIA' },
+    { label: 'CONTABILIDAD', value: 'CONTABILIDAD' },
+    { label: 'ADMINISTRACIÓN', value: 'ADMINISTRACIÓN' },
+    { label: 'OTRA', value: 'OTRA' },
+  ];
+
+  const dataEquipo = [
+    { label: 'TOSHIBA 123', value: 'TOSHIBA 123' },
+    { label: 'EPSON L377', value: 'EPSON L377' },
+    { label: 'SAMSUNG T8', value: 'SAMSUNG T8' },
+    { label: 'OTRA', value: 'OTRA' },
+  ];
 
   const handleSubmit = async () => {
     const { area, equipo } = infoService;
@@ -46,18 +63,30 @@ export const SelectPritingScreen = () => {
       <Text>SelectPritingScreen</Text>
 
       <View>
-
-        <TextInput
+        <Picker
           style={stylesG.input}
-          placeholder="Area"
-          onChangeText={text => setInfoService({ ...infoService, area: text })}
-        />
+          selectedValue={areaPicker}
+          onValueChange={(itemValue) => {
+            setAreaPicker(itemValue);
+            setInfoService({ ...infoService, area: itemValue });
+          }}
+        >
+          {dataArea.map((area, index) => <Picker.Item key={index} label={area.label} value={area.value} />)}
+        </Picker>
 
-        <TextInput
+        <Picker
           style={stylesG.input}
-          placeholder="Equipo"
-          onChangeText={text => setInfoService({ ...infoService, equipo: text })}
-        />
+          selectedValue={equipoPicker}
+          onValueChange={(itemValue) => {
+            setEquipoPicker(itemValue)
+            setInfoService({ ...infoService, equipo: itemValue });
+          }
+          }
+
+        >
+          {dataEquipo.map((equipo, index) => <Picker.Item key={index} label={equipo.label} value={equipo.value} />)}
+
+        </Picker>
 
         <TouchableOpacity
           activeOpacity={0.5}
