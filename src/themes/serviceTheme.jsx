@@ -5,7 +5,7 @@ export const stylesS = StyleSheet.create({
     width: "80%",
     marginTop: 15,
     paddingVertical: 5,
-    borderTopColor: "#33333350",
+    borderTopColor: "#5472AE",
     borderTopWidth: 1
   },
 

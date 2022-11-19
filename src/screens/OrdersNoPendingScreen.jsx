@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, SafeAreaView } from 'react-native';
 import { collection, onSnapshot, orderBy, query, where } from 'firebase/firestore';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { ServiceComponent } from '../components/ServiceComponent';
 import { stylesG } from '../themes/globalTheme';
 import firebaseDB from '../config/fb';
@@ -35,9 +36,12 @@ export const OrdersNoPendingScreen = () => {
 
 
   return (
-    <SafeAreaView style={stylesG.container}>
-      <Text>Servicios Asignados</Text>
-      {services.map(service => <ServiceComponent key={service.id} service={service} />)}
-    </SafeAreaView>
-  )
+    <KeyboardAwareScrollView>
+
+      <SafeAreaView style={stylesG.container}>
+        <Text style={{ fontSize: 25, fontWeight: 'bold', color: '#68538D' }}>Servicios Asignados</Text>
+        {services.map(service => <ServiceComponent key={service.id} service={service} />)}
+      </SafeAreaView>
+    </KeyboardAwareScrollView>
+  );
 }

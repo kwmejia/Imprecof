@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { View, Text, SafeAreaView, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { collection, onSnapshot, orderBy, query, where } from 'firebase/firestore';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useNavigation } from '@react-navigation/native';
 import { Icon } from 'react-native-elements/dist/icons/Icon';
 import { stylesG } from '../themes/globalTheme';
 import firebaseDB from '../config/fb';
+import { Image } from 'react-native';
 
 export const LoginScreen = () => {
 
@@ -34,7 +36,7 @@ export const LoginScreen = () => {
       )
     });
 
-
+    console.log(users);
     if (!users[0]) {
       Alert.alert('Credenciales incorrectas');
       return;
@@ -45,14 +47,14 @@ export const LoginScreen = () => {
   }
 
   return (
-    <SafeAreaView style={stylesG.container}>
-      {/* <View style={styles.contTitle}>
-        <Text style={styles.title}>INICIO SESIÓN</Text>
-      </View> */}
+    <KeyboardAwareScrollView>
+      <SafeAreaView style={stylesG.container}>
 
-      <View style={{ flex: 1 }}>
+        <Image source={require('../../assets/IMPRECOF.png')} style={stylesG.logo} />
+
+
         <TextInput
-          style={{ ...stylesG.input, marginTop: 50 }}
+          style={{ ...stylesG.input, marginTop: 20 }}
           placeholder="Usuario"
           onChangeText={text => setUser(text)}
           value={user}
@@ -84,9 +86,9 @@ export const LoginScreen = () => {
 
         </TouchableOpacity>
 
-      </View>
 
-    </SafeAreaView>
+      </SafeAreaView>
+    </KeyboardAwareScrollView>
   );
 };
 

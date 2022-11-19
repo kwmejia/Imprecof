@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { View, Text, SafeAreaView, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { collection, addDoc } from 'firebase/firestore';
 import firebaseDB from '../config/fb';
 import { InfoContext } from '../context/InfoContext';
@@ -7,6 +8,8 @@ import { stylesG } from '../themes/globalTheme';
 import { Picker } from '@react-native-picker/picker';
 import { useNavigation } from '@react-navigation/native';
 import { Alert } from 'react-native';
+import { Image } from 'react-native';
+import LoaderComponent from '../components/LoaderComponent';
 
 export const SelectPritingScreen = () => {
 
@@ -15,8 +18,6 @@ export const SelectPritingScreen = () => {
   const [equipoPicker, setEquipoPicker] = useState('');
   const { infoService, setInfoService } = useContext(InfoContext);
   const navigation = useNavigation();
-
-  console.log('desde', infoService);
 
   const dataArea = [
     { label: 'CONTADURIA', value: 'CONTADURIA' },
@@ -43,7 +44,7 @@ export const SelectPritingScreen = () => {
       setLoading(true);
       await addDoc(collection(firebaseDB, 'services'), infoService);
       setLoading(false);
-      navigation.navigate("HomeScreen");
+      navigation.navigate("ServiceAprovatedComponent");
     } catch (e) {
       console.log(e);
     }
@@ -52,42 +53,41 @@ export const SelectPritingScreen = () => {
 
   if (loading) {
     return (
-      <View style={{ ...stylesG.container, justifyContent: 'center' }}>
-        <ActivityIndicator size={40} />
-        <Text>Cargando ...</Text>
-      </View>
+      <LoaderComponent />
     )
   }
 
   return (
-    <SafeAreaView style={stylesG.container}>
-      <Text>SelectPritingScreen</Text>
+    <KeyboardAwareScrollView>
+      <SafeAreaView style={stylesG.container}>
+        <Image style={{ width: '80%', height: 200, marginTop: 0 }} source={require('../../assets/ocho.png')} />
 
-      <View>
-        <Picker
-          style={stylesG.input}
-          selectedValue={areaPicker}
-          onValueChange={(itemValue) => {
-            setAreaPicker(itemValue);
-            setInfoService({ ...infoService, area: itemValue });
-          }}
-        >
-          {dataArea.map((area, index) => <Picker.Item key={index} label={area.label} value={area.value} />)}
-        </Picker>
+        <TouchableOpacity style={{ ...stylesG.input, justifyContent: 'center', height: 70, marginTop: 20 }}>
 
-        <Picker
-          style={stylesG.input}
-          selectedValue={equipoPicker}
-          onValueChange={(itemValue) => {
-            setEquipoPicker(itemValue)
-            setInfoService({ ...infoService, equipo: itemValue });
-          }
-          }
+          <Picker
+            selectedValue={areaPicker}
+            onValueChange={(itemValue) => {
+              setAreaPicker(itemValue);
+              setInfoService({ ...infoService, area: itemValue });
+            }}
 
-        >
-          {dataEquipo.map((equipo, index) => <Picker.Item key={index} label={equipo.label} value={equipo.value} />)}
+          >
+            {dataArea.map((area, index) => <Picker.Item key={index} label={area.label} value={area.value} />)}
+          </Picker>
+        </TouchableOpacity>
 
-        </Picker>
+        <TouchableOpacity style={{ ...stylesG.input, justifyContent: 'center', height: 70 }}>
+          <Picker
+            selectedValue={equipoPicker}
+            onValueChange={(itemValue) => {
+              setEquipoPicker(itemValue)
+              setInfoService({ ...infoService, equipo: itemValue });
+            }}
+          >
+            {dataEquipo.map((equipo, index) => <Picker.Item key={index} label={equipo.label} value={equipo.value} />)}
+
+          </Picker>
+        </TouchableOpacity>
 
         <TouchableOpacity
           activeOpacity={0.5}
@@ -96,7 +96,7 @@ export const SelectPritingScreen = () => {
         >
           <Text style={stylesG.textBtn}>ENVIAR</Text>
         </TouchableOpacity>
-      </View>
-    </SafeAreaView>
+      </SafeAreaView>
+    </KeyboardAwareScrollView>
   )
 }
